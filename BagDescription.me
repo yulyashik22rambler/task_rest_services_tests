@@ -1,0 +1,26 @@
+Unexpected behavour:
+
+BAG_1:
+Condition:  Test 'createTriangle422MoreThan10AllowedTest' call a servise https://qa-quiz.natera.com/triangle with body {"input": "3;4;5"} by POST method.
+Expected:   You can save up to 10 triangles
+Actual:     I could saved 11 triangles
+
+
+BAG_2:
+Condition:  Test 'createTriangle422WrongRequestTest' call a servise https://qa-quiz.natera.com/triangle with body {"input": "-3;4;5"} by POST method.
+Expected:   Acording normal behavour usually a side length can not be  negative and an expectation - it's not allowed to save any triangle, response code is 422.
+Actual:     I could saved the triangle and get 200 Ok
+
+Possible bag - We think the "input" can get integers and floating point numbers because there was not said another and servise get floating point numbers with dot.
+Also we think the "separator" can get ANY values. 
+
+In this case possible bags
+BAG_3P:
+Condition:  Test 'createTriangleAnySeparatorTest' call a servise https://qa-quiz.natera.com/triangle with body {"input": "3e1;4;5"} by POST method.
+Expected:  It's allowed to save any triangle, response code is 200.
+Actual:    It's not allowed to save any triangle, response code is 422.
+
+BAG_4P:
+Condition:  Test 'createTriangleAnySeparatorTest' call a servise https://qa-quiz.natera.com/triangle with body {"separator": ".", "input": "3.4.5"} or {"separator": ".", "input": "1.2.4.6.5.7"} by POST method.
+Expected:  It's allowed to save any triangle, response code is 200.
+Actual:    It's not allowed to save any triangle, response code is 422.
